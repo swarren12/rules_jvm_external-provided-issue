@@ -1,0 +1,33 @@
+#
+# Bazel MODULE
+#
+
+module(
+    name = "bazel-sandbox",
+    repo_name = "bazel-sandbox",
+)
+
+### Bazel Dependencies
+
+# Java
+### https://github.com/bazelbuild/rules_java
+
+bazel_dep(name = "rules_java", version = "8.11.0", dev_dependency = True)
+bazel_dep(name = "rules_jvm_external", version = "6.7", dev_dependency = True)
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    name = "maven",
+    artifacts = [
+        "org.checkerframework:checker:3.37.0",
+        "org.checkerframework:checker-qual:3.37.0",
+        "io.vertx:vertx-core:4.5.10",
+        "io.vertx:vertx-web:4.5.10",
+    ],
+    fetch_sources = True,
+    lock_file = "//:maven_install.json",
+    repositories = ["https://repo1.maven.org/maven2"],
+)
+
+use_repo(maven, "maven")

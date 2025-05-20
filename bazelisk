@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+BASEDIR=$(readlink -f $(dirname "$0"))
+
+BAZEL_OPT="${BASEDIR}/.bazel/"
+BAZELISK_BINARY="${BAZEL_OPT}/bazelisk"
+
+if [ ! -f "${BAZELISK_BINARY}" ]
+then
+    mkdir -p "${BAZEL_OPT}"
+    wget https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64 -O "${BAZELISK_BINARY}"
+    chmod +x "${BAZELISK_BINARY}"
+fi
+
+$BAZELISK_BINARY $@

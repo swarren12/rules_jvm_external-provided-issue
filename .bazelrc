@@ -1,0 +1,5 @@
+#
+# Bazel Settings
+#
+
+build --experimental_strict_java_deps=strict

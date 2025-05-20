@@ -1,0 +1,7 @@
+.idea/
+.bazel
+bazel-rules_jvm_external-provided-issue
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-sandbox.iml

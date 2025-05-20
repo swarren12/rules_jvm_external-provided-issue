@@ -1,0 +1,31 @@
+#
+# Root BUILD
+#
+load("@rules_jvm_external//:defs.bzl", "artifact")
+load("@rules_java//java:defs.bzl", "java_binary")
+
+java_plugin(
+    name = "checker-framework",
+    deps = [
+        artifact("org.checkerframework:checker"),
+        artifact("org.checkerframework:checker-qual")
+    ],
+    processor_class = "org.checkerframework.checker.units.UnitsChecker",
+)
+
+java_binary(
+    name = "main",
+    srcs = ["src/main/java/com/example/Main.java"],
+    main_class = "com.example.Main",
+    deps = [
+        artifact("org.checkerframework:checker-qual"),
+        artifact("io.vertx:vertx-core"),
+        artifact("io.vertx:vertx-web"),
+    ],
+    plugins = [":checker-framework"],
+    javacopts = [
+        "-Aunits=",
+        "-AsuppressWarnings=type.invalid.conflicting.annos,type.anno.before.decl.anno",
+        "-Werror"
+    ],
+)
